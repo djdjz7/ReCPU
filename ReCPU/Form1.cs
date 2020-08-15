@@ -105,19 +105,19 @@ namespace ReCPU
         {
             if (!File.Exists("ORGCPU.reg"))
             {
-                ReCPU.RegExportImport.ExportReg(str + @"\ORGCPU.reg", @"HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0");
+                global::ReCPU.RegExportImport.ExportReg(str + @"\ORGCPU.reg", @"HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0");
             }
 
             File.WriteAllText("GENERATED.reg", @"Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0]
 ""ProcessorNameString""=""" + dein.SelectedItem + @"""");
-            ReCPU.RegExportImport.ImportReg(str + @"\GENERATED.reg", null);
+            global::ReCPU.RegExportImport.ImportReg(str + @"\GENERATED.reg", null);
         }
 
         private void restore_Click(object sender, EventArgs e)
         {
-            ReCPU.RegExportImport.ImportReg(str + @"\ORGCPU.reg", null);
+            global::ReCPU.RegExportImport.ImportReg(str + @"\ORGCPU.reg", null);
         }
     }
 

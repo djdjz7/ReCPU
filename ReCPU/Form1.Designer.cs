@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.modu1 = new System.Windows.Forms.ComboBox();
             this.manuname = new System.Windows.Forms.ComboBox();
@@ -119,7 +120,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(576, 369);
+            this.ClientSize = new System.Drawing.Size(424, 191);
             this.Controls.Add(this.restore);
             this.Controls.Add(this.apply);
             this.Controls.Add(this.dein);
@@ -127,8 +128,9 @@
             this.Controls.Add(this.manuname);
             this.Controls.Add(this.modu1);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "ReCPU";
             this.ResumeLayout(false);
             this.PerformLayout();
 
