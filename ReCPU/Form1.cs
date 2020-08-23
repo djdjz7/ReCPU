@@ -180,9 +180,21 @@ namespace ReCPU
 
         private void apply_Click(object sender, EventArgs e)
         {
+
             if (!File.Exists("ORGCPU.reg"))
             {
+                barLabel.Text = "Backing up original CPU information...";
+                barProgress.Value = 20;
                 global::ReCPU.RegExportImport.ExportReg(str + @"\ORGCPU.reg", @"HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0");
+            }
+            barLabel.Text = "Generating configuration...";
+            barProgress.Value = 50;
+            if(dein.SelectedItem==null)
+            {
+                MessageBox.Show("No CPU model selected.\nPlease choose the fake CPU model you want.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                barLabel.Text = "Progress Aborted: No CPU model selected.";
+                barProgress.Value = 0;
+                return;
             }
             if (usecheck.Checked == false)
                 File.WriteAllText("GENERATED.reg", @"Windows Registry Editor Version 5.00
@@ -194,12 +206,32 @@ namespace ReCPU
 
 [HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0]
 ""ProcessorNameString""=""" + dein.SelectedItem + @" @ "+speedinput.Text+@" GHz""");
+            barLabel.Text = "Importing configuration...";
+            barProgress.Value = 70;
             global::ReCPU.RegExportImport.ImportReg(str + @"\GENERATED.reg", null);
+            barLabel.Text = "Done.";
+            barProgress.Value = 100;
         }
 
         private void restore_Click(object sender, EventArgs e)
         {
-            global::ReCPU.RegExportImport.ImportReg(str + @"\ORGCPU.reg", null);
+            barLabel.Text = "Restoring CPU information...";
+            barProgress.Value = 50;
+            if (File.Exists(str + @"\ORGCPU.reg"))
+            {
+                global::ReCPU.RegExportImport.ImportReg(str + @"\ORGCPU.reg", null);
+                barLabel.Text = "Done.";
+                barProgress.Value = 100;
+            }   
+            else
+            {
+                MessageBox.Show(@"Original CPU information not found.
+The original CPU information is backed up the first time you apply the configuration.
+Please click apply button to buckup you CPU information and try to restore again.
+If you still get this error message, make sure you can access to the directory.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                barLabel.Text = "Restore Failed.";
+                barProgress.Value = 0;
+            }
         }
 
         private void usecheck_CheckedChanged(object sender, EventArgs e)

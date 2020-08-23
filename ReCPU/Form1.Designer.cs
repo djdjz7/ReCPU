@@ -39,6 +39,10 @@
             this.speedinput = new System.Windows.Forms.TextBox();
             this.usecheck = new System.Windows.Forms.CheckBox();
             this.ghzlabel = new System.Windows.Forms.Label();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.barProgress = new System.Windows.Forms.ToolStripProgressBar();
+            this.barLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -150,11 +154,34 @@
             this.ghzlabel.TabIndex = 11;
             this.ghzlabel.Text = "GHz";
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.barProgress,
+            this.barLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 186);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(349, 22);
+            this.statusStrip1.TabIndex = 12;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // barProgress
+            // 
+            this.barProgress.Name = "barProgress";
+            this.barProgress.Size = new System.Drawing.Size(100, 16);
+            // 
+            // barLabel
+            // 
+            this.barLabel.Name = "barLabel";
+            this.barLabel.Size = new System.Drawing.Size(47, 17);
+            this.barLabel.Text = "Ready.";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 187);
+            this.ClientSize = new System.Drawing.Size(349, 208);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.ghzlabel);
             this.Controls.Add(this.usecheck);
             this.Controls.Add(this.speedinput);
@@ -165,10 +192,13 @@
             this.Controls.Add(this.manuname);
             this.Controls.Add(this.modu1);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "ReCPU";
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,6 +216,9 @@
         private System.Windows.Forms.TextBox speedinput;
         private System.Windows.Forms.CheckBox usecheck;
         private System.Windows.Forms.Label ghzlabel;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripProgressBar barProgress;
+        private System.Windows.Forms.ToolStripStatusLabel barLabel;
     }
 }
 
