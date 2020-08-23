@@ -58,12 +58,33 @@ namespace ReCPU
         private void cpugen_SelectedIndexChanged(object sender, EventArgs e)
         {
             dein.Items.Clear();
+            dein.Enabled = true;
+            apply.Enabled = true;
             switch (modu1.SelectedItem)
             {
+                case "Core i3":
+                    switch (cpugen.SelectedItem)
+                    {
+                        case "Gen 10":
+                            dein.Items.Clear();
+                            dein.Items.Add("Intel(R) Core(TM) i3-10320 CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i3-10300 CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i3-10100 CPU");
+                            break;
+                        default:
+                            dein.Items.Clear();
+                            dein.Items.Add("Not Supported");
+                            dein.Text = "Not Supported";
+                            dein.Enabled = false;
+                            apply.Enabled = false;
+                            break;
+                    }
+                    break;
                 case "Core i5":
                     switch (cpugen.SelectedItem)
                     {
                         case "Gen 10":
+                            dein.Items.Clear();
                             dein.Items.Add("Intel(R) Core(TM) i5-1035G7 CPU");
                             dein.Items.Add("Intel(R) Core(TM) i5-1035G4 CPU");
                             dein.Items.Add("Intel(R) Core(TM) i5-1035G1 CPU");
@@ -89,10 +110,66 @@ namespace ReCPU
                             dein.Items.Add("Intel(R) Core(TM) i5-1038NG7 CPU");
                             break;
                         default:
+                            dein.Items.Clear();
+                            dein.Items.Add("Not Supported");
+                            dein.Text = "Not Supported";
+                            dein.Enabled = false;
+                            apply.Enabled = false;
                             break;
                     }
                     break;
-                default:break;
+                case "Core i7":
+                    switch(cpugen.SelectedItem)
+                    {
+                        case "Gen 10":
+                            dein.Items.Clear();
+                            dein.Items.Add("Intel(R) Core(TM) i7-10700K CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i7-10700KF CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i7-10700 CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i7-10700F CPU");
+                            break;
+                        default:
+                            dein.Items.Clear();
+                            dein.Items.Add("Not Supported");
+                            dein.Text = "Not Supported";
+                            dein.Enabled = false;
+                            apply.Enabled = false;
+                            break;
+                    }
+                    break;
+                case "Core i9":
+                    switch(cpugen.SelectedItem)
+                    {
+                        case "Gen 10":
+                            dein.Items.Clear();
+                            dein.Items.Add("Intel(R) Core(TM) i9-10900K CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i9-10900F CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i9-10940XE CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i9-10900 CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i9-10980HK CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i9-10900KF CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i9-10900XE CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i9-10885H CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i9-10990XE CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i9-10900T CPU");
+                            dein.Items.Add("Intel(R) Core(TM) i9-10920XE CPU");
+                            break;
+                        default:
+                            dein.Items.Clear();
+                            dein.Items.Add("Not Supported");
+                            dein.Text = "Not Supported";
+                            dein.Enabled = false;
+                            apply.Enabled = false;
+                            break;
+                    }
+                    break;
+                default:
+                    dein.Items.Clear();
+                    dein.Items.Add("Not Supported");
+                    dein.Text = "Not Supported";
+                    dein.Enabled = false;
+                    apply.Enabled = false;
+                    break;
             }
         }
 
@@ -107,17 +184,34 @@ namespace ReCPU
             {
                 global::ReCPU.RegExportImport.ExportReg(str + @"\ORGCPU.reg", @"HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0");
             }
-
-            File.WriteAllText("GENERATED.reg", @"Windows Registry Editor Version 5.00
+            if (usecheck.Checked == false)
+                File.WriteAllText("GENERATED.reg", @"Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0]
 ""ProcessorNameString""=""" + dein.SelectedItem + @"""");
+            if(usecheck.Checked==true)
+                File.WriteAllText("GENERATED.reg", @"Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0]
+""ProcessorNameString""=""" + dein.SelectedItem + @" @ "+speedinput.Text+@" GHz""");
             global::ReCPU.RegExportImport.ImportReg(str + @"\GENERATED.reg", null);
         }
 
         private void restore_Click(object sender, EventArgs e)
         {
             global::ReCPU.RegExportImport.ImportReg(str + @"\ORGCPU.reg", null);
+        }
+
+        private void usecheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if(usecheck.Checked==false)
+            {
+                speedinput.Enabled = false;
+            }
+            if(usecheck.Checked==true)
+            {
+                speedinput.Enabled = true;
+            }
         }
     }
 
