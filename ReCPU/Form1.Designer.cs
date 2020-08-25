@@ -42,14 +42,18 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.barProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.barLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.isclear = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(12, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 47);
             this.label1.TabIndex = 0;
@@ -60,7 +64,7 @@
             this.modu1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.modu1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.modu1.FormattingEnabled = true;
-            this.modu1.Location = new System.Drawing.Point(126, 59);
+            this.modu1.Location = new System.Drawing.Point(126, 74);
             this.modu1.Name = "modu1";
             this.modu1.Size = new System.Drawing.Size(100, 23);
             this.modu1.TabIndex = 2;
@@ -73,7 +77,7 @@
             this.manuname.FormattingEnabled = true;
             this.manuname.Items.AddRange(new object[] {
             "Intel Core"});
-            this.manuname.Location = new System.Drawing.Point(20, 59);
+            this.manuname.Location = new System.Drawing.Point(20, 74);
             this.manuname.Name = "manuname";
             this.manuname.Size = new System.Drawing.Size(100, 23);
             this.manuname.TabIndex = 3;
@@ -84,7 +88,7 @@
             this.cpugen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cpugen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cpugen.FormattingEnabled = true;
-            this.cpugen.Location = new System.Drawing.Point(232, 59);
+            this.cpugen.Location = new System.Drawing.Point(232, 74);
             this.cpugen.Name = "cpugen";
             this.cpugen.Size = new System.Drawing.Size(100, 23);
             this.cpugen.TabIndex = 4;
@@ -95,7 +99,7 @@
             this.dein.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dein.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dein.FormattingEnabled = true;
-            this.dein.Location = new System.Drawing.Point(20, 88);
+            this.dein.Location = new System.Drawing.Point(20, 103);
             this.dein.Name = "dein";
             this.dein.Size = new System.Drawing.Size(312, 23);
             this.dein.TabIndex = 5;
@@ -104,7 +108,7 @@
             // apply
             // 
             this.apply.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.apply.Location = new System.Drawing.Point(20, 142);
+            this.apply.Location = new System.Drawing.Point(20, 157);
             this.apply.Name = "apply";
             this.apply.Size = new System.Drawing.Size(100, 23);
             this.apply.TabIndex = 6;
@@ -115,7 +119,7 @@
             // restore
             // 
             this.restore.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.restore.Location = new System.Drawing.Point(232, 142);
+            this.restore.Location = new System.Drawing.Point(232, 157);
             this.restore.Name = "restore";
             this.restore.Size = new System.Drawing.Size(100, 23);
             this.restore.TabIndex = 7;
@@ -127,7 +131,7 @@
             // 
             this.speedinput.Enabled = false;
             this.speedinput.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.speedinput.Location = new System.Drawing.Point(184, 115);
+            this.speedinput.Location = new System.Drawing.Point(184, 130);
             this.speedinput.Name = "speedinput";
             this.speedinput.Size = new System.Drawing.Size(113, 23);
             this.speedinput.TabIndex = 9;
@@ -136,7 +140,7 @@
             // 
             this.usecheck.AutoSize = true;
             this.usecheck.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.usecheck.Location = new System.Drawing.Point(20, 117);
+            this.usecheck.Location = new System.Drawing.Point(20, 132);
             this.usecheck.Name = "usecheck";
             this.usecheck.Size = new System.Drawing.Size(158, 19);
             this.usecheck.TabIndex = 10;
@@ -148,7 +152,7 @@
             // 
             this.ghzlabel.AutoSize = true;
             this.ghzlabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ghzlabel.Location = new System.Drawing.Point(303, 118);
+            this.ghzlabel.Location = new System.Drawing.Point(303, 133);
             this.ghzlabel.Name = "ghzlabel";
             this.ghzlabel.Size = new System.Drawing.Size(29, 15);
             this.ghzlabel.TabIndex = 11;
@@ -156,12 +160,13 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.barProgress,
             this.barLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 186);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 192);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(349, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(355, 22);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -173,15 +178,45 @@
             // barLabel
             // 
             this.barLabel.Name = "barLabel";
-            this.barLabel.Size = new System.Drawing.Size(47, 17);
+            this.barLabel.Size = new System.Drawing.Size(42, 17);
             this.barLabel.Text = "Ready.";
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
+            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(355, 24);
+            this.menuStrip1.TabIndex = 13;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.isclear});
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // isclear
+            // 
+            this.isclear.CheckOnClick = true;
+            this.isclear.Name = "isclear";
+            this.isclear.Size = new System.Drawing.Size(180, 22);
+            this.isclear.Text = "ClearMode";
+            this.isclear.Click += new System.EventHandler(this.isclear_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(349, 208);
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ClientSize = new System.Drawing.Size(355, 214);
             this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.ghzlabel);
             this.Controls.Add(this.usecheck);
             this.Controls.Add(this.speedinput);
@@ -194,11 +229,15 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ReCPU";
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,6 +258,9 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar barProgress;
         private System.Windows.Forms.ToolStripStatusLabel barLabel;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem isclear;
     }
 }
 

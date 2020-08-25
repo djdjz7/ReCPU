@@ -1,32 +1,92 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 
 
 namespace ReCPU
 {
+
+
+
+
     public partial class Form1 : Form
     {
 
+        [DllImport("user32.dll")]
+        internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct WindowCompositionAttributeData
+        {
+            public WindowCompositionAttribute Attribute;
+            public IntPtr Data;
+            public int SizeOfData;
+        }
+
+        internal enum WindowCompositionAttribute
+        {
+            WCA_ACCENT_POLICY = 19
+        }
+
+        internal enum AccentState
+        {
+            ACCENT_DISABLED = 0,
+            ACCENT_ENABLE_GRADIENT = 1,
+            ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
+            ACCENT_ENABLE_BLURBEHIND = 3,
+            ACCENT_INVALID_STATE = 4
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct AccentPolicy
+        {
+            public AccentState AccentState;
+            public int AccentFlags;
+            public int GradientColor;
+            public int AnimationId;
+        }
+
+        internal void EnableBlur()
+        {
+            var accent = new AccentPolicy();
+            var accentStructSize = Marshal.SizeOf(accent);
+            accent.AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND;
+
+            var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+            Marshal.StructureToPtr(accent, accentPtr, false);
+
+            var data = new WindowCompositionAttributeData();
+            data.Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY;
+            data.SizeOfData = accentStructSize;
+            data.Data = accentPtr;
+
+            SetWindowCompositionAttribute(this.Handle, ref data);
+
+            Marshal.FreeHGlobal(accentPtr);
+        }
+
+
         string str = Environment.CurrentDirectory;
+        private static string ApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         public Form1()
         {
+            Directory.CreateDirectory(ApplicationData + @"\ReCPU");
             InitializeComponent();
+            //this.Opacity = 0.8;
+            //EnableBlur();
+            if (File.Exists(ApplicationData + @"\ReCPU\clear"))
+            {
+                EnableBlur();
+                isclear.Checked = true;
+            }
         }
 
         private void manuname_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (manuname.SelectedItem == "Intel Core")
+            if ((string)manuname.SelectedItem == "Intel Core")
             {
                 modu1.Items.Clear();
                 modu1.Items.Add("Core i3");
@@ -53,7 +113,7 @@ namespace ReCPU
             cpugen.Items.Add("Gen 10");
         }
 
-       
+
 
         private void cpugen_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -119,7 +179,7 @@ namespace ReCPU
                     }
                     break;
                 case "Core i7":
-                    switch(cpugen.SelectedItem)
+                    switch (cpugen.SelectedItem)
                     {
                         case "Gen 10":
                             dein.Items.Clear();
@@ -138,7 +198,7 @@ namespace ReCPU
                     }
                     break;
                 case "Core i9":
-                    switch(cpugen.SelectedItem)
+                    switch (cpugen.SelectedItem)
                     {
                         case "Gen 10":
                             dein.Items.Clear();
@@ -175,21 +235,21 @@ namespace ReCPU
 
         private void dein_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void apply_Click(object sender, EventArgs e)
         {
 
-            if (!File.Exists("ORGCPU.reg"))
+            if (!File.Exists(ApplicationData + @"\ReCPU\ORGCPU.reg"))
             {
                 barLabel.Text = "Backing up original CPU information...";
                 barProgress.Value = 20;
-                global::ReCPU.RegExportImport.ExportReg(str + @"\ORGCPU.reg", @"HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0");
+                global::ReCPU.RegExportImport.ExportReg(ApplicationData + @"\ReCPU\ORGCPU.reg", @"HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0");
             }
             barLabel.Text = "Generating configuration...";
             barProgress.Value = 50;
-            if(dein.SelectedItem==null)
+            if (dein.SelectedItem == null)
             {
                 MessageBox.Show("No CPU model selected.\nPlease choose the fake CPU model you want.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 barLabel.Text = "Progress Aborted: No CPU model selected.";
@@ -197,18 +257,18 @@ namespace ReCPU
                 return;
             }
             if (usecheck.Checked == false)
-                File.WriteAllText("GENERATED.reg", @"Windows Registry Editor Version 5.00
+                File.WriteAllText(ApplicationData + @"\ReCPU\GENERATED.reg", @"Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0]
 ""ProcessorNameString""=""" + dein.SelectedItem + @"""");
-            if(usecheck.Checked==true)
-                File.WriteAllText("GENERATED.reg", @"Windows Registry Editor Version 5.00
+            if (usecheck.Checked == true)
+                File.WriteAllText(ApplicationData + @"\ReCPU\GENERATED.reg", @"Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0]
-""ProcessorNameString""=""" + dein.SelectedItem + @" @ "+speedinput.Text+@" GHz""");
+""ProcessorNameString""=""" + dein.SelectedItem + @" @ " + speedinput.Text + @" GHz""");
             barLabel.Text = "Importing configuration...";
             barProgress.Value = 70;
-            global::ReCPU.RegExportImport.ImportReg(str + @"\GENERATED.reg", null);
+            global::ReCPU.RegExportImport.ImportReg(ApplicationData + @"\ReCPU\GENERATED.reg", null);
             barLabel.Text = "Done.";
             barProgress.Value = 100;
         }
@@ -217,12 +277,12 @@ namespace ReCPU
         {
             barLabel.Text = "Restoring CPU information...";
             barProgress.Value = 50;
-            if (File.Exists(str + @"\ORGCPU.reg"))
+            if (File.Exists(ApplicationData + @"\ReCPU\ORGCPU.reg"))
             {
-                global::ReCPU.RegExportImport.ImportReg(str + @"\ORGCPU.reg", null);
+                global::ReCPU.RegExportImport.ImportReg(ApplicationData + @"\ReCPU\ORGCPU.reg", null);
                 barLabel.Text = "Done.";
                 barProgress.Value = 100;
-            }   
+            }
             else
             {
                 MessageBox.Show(@"Original CPU information not found.
@@ -236,16 +296,62 @@ If you still get this error message, make sure you can access to the directory."
 
         private void usecheck_CheckedChanged(object sender, EventArgs e)
         {
-            if(usecheck.Checked==false)
+            if (usecheck.Checked == false)
             {
                 speedinput.Enabled = false;
             }
-            if(usecheck.Checked==true)
+            if (usecheck.Checked == true)
             {
                 speedinput.Enabled = true;
             }
         }
+
+        private void isclear_Click(object sender, EventArgs e)
+        {
+            if (isclear.Checked == true)
+            {
+                File.Create(ApplicationData + @"\ReCPU\clear").Close();
+                switch (MessageBox.Show(@"ClearMode should only be enabled under Windows 10 environment.
+Do not try it under Windows 7/8/8.1.
+The application will atomaticly reload to take effect.
+Please notice: The display effect is not ideal.
+Continue?", "Notice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                {
+                    case DialogResult.None:
+                        break;
+                    case DialogResult.OK:
+                        break;
+                    case DialogResult.Cancel:
+                        break;
+                    case DialogResult.Abort:
+                        break;
+                    case DialogResult.Retry:
+                        break;
+                    case DialogResult.Ignore:
+                        break;
+                    case DialogResult.Yes:
+                        break;
+                    case DialogResult.No:
+                        isclear.Checked = false;
+                        return;
+                    default:
+                        break;
+                }
+                this.Hide();
+                Form1 form = new Form1();
+                form.ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                File.Delete(ApplicationData + @"\ReCPU\clear");
+                this.Hide();
+                Form1 form = new Form1();
+                form.ShowDialog();
+                this.Close();
+            }
+        }
     }
 
-   
+
 }
