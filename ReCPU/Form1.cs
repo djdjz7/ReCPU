@@ -73,7 +73,8 @@ namespace ReCPU
 
         public Form1()
         {
-            Directory.CreateDirectory(ApplicationData + @"\ReCPU");
+            if (!Directory.Exists(ApplicationData + @"\ReCPU"))
+                Directory.CreateDirectory(ApplicationData + @"\ReCPU");
             InitializeComponent();
             //this.Opacity = 0.8;
             //EnableBlur();
@@ -81,6 +82,12 @@ namespace ReCPU
             {
                 EnableBlur();
                 isclear.Checked = true;
+            }
+            if (!File.Exists(ApplicationData + @"\ReCPU\ORGCPU.reg"))
+            {
+                barLabel.Text = "Backing up original CPU information...";
+                barProgress.Value = 20;
+                global::ReCPU.RegExportImport.ExportReg(ApplicationData + @"\ReCPU\ORGCPU.reg", @"HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0");
             }
         }
 
@@ -241,12 +248,7 @@ namespace ReCPU
         private void apply_Click(object sender, EventArgs e)
         {
 
-            if (!File.Exists(ApplicationData + @"\ReCPU\ORGCPU.reg"))
-            {
-                barLabel.Text = "Backing up original CPU information...";
-                barProgress.Value = 20;
-                global::ReCPU.RegExportImport.ExportReg(ApplicationData + @"\ReCPU\ORGCPU.reg", @"HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0");
-            }
+            
             barLabel.Text = "Generating configuration...";
             barProgress.Value = 50;
             if (dein.SelectedItem == null)
@@ -350,6 +352,12 @@ Continue?", "Notice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                 form.ShowDialog();
                 this.Close();
             }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
         }
     }
 
