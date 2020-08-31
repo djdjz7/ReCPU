@@ -69,19 +69,33 @@ namespace ReCPU
 
 
         string str = Environment.CurrentDirectory;
+        string enableblur;
+        string usecustomcpu;
         private static string ApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         public Form1()
         {
             if (!Directory.Exists(ApplicationData + @"\ReCPU"))
                 Directory.CreateDirectory(ApplicationData + @"\ReCPU");
+            if (!File.Exists(ApplicationData + @"\ReCPU\Settings.ini"))
+                File.Create(ApplicationData + @"\ReCPU\Settings.ini");
             InitializeComponent();
-            //this.Opacity = 0.8;
-            //EnableBlur();
-            if (File.Exists(ApplicationData + @"\ReCPU\clear"))
+            //if (File.Exists(ApplicationData + @"\ReCPU\clear"))
+            enableblur = IniFunc.getString("Section 1", "ClearMode", "false", ApplicationData + @"\ReCPU\Settings.ini");
+            usecustomcpu = IniFunc.getString("Section 1", "UseCustomCPU", "false", ApplicationData + @"\ReCPU\Settings.ini");
+            if(enableblur=="true")
             {
                 EnableBlur();
                 isclear.Checked = true;
+            }
+            if(usecustomcpu=="true")
+            {
+                inputsellab.Text = "Input or select CPU model:";
+                dein.DropDownStyle = ComboBoxStyle.DropDown;
+                useCustomCPUModelToolStripMenuItem.Checked = true;
+                manuname.Enabled = false;
+                modu1.Enabled = false;
+                cpugen.Enabled = false;
             }
             if (!File.Exists(ApplicationData + @"\ReCPU\ORGCPU.reg"))
             {
@@ -140,10 +154,13 @@ namespace ReCPU
                             break;
                         default:
                             dein.Items.Clear();
-                            dein.Items.Add("Not Supported");
-                            dein.Text = "Not Supported";
-                            dein.Enabled = false;
-                            apply.Enabled = false;
+                            if(usecustomcpu=="false")
+                            {
+                                dein.Items.Add("Not Supported");
+                                dein.Text = "Not Supported";
+                                dein.Enabled = false;
+                                apply.Enabled = false;
+                            }
                             break;
                     }
                     break;
@@ -178,10 +195,13 @@ namespace ReCPU
                             break;
                         default:
                             dein.Items.Clear();
-                            dein.Items.Add("Not Supported");
-                            dein.Text = "Not Supported";
-                            dein.Enabled = false;
-                            apply.Enabled = false;
+                            if (usecustomcpu == "false")
+                            {
+                                dein.Items.Add("Not Supported");
+                                dein.Text = "Not Supported";
+                                dein.Enabled = false;
+                                apply.Enabled = false;
+                            }
                             break;
                     }
                     break;
@@ -197,10 +217,13 @@ namespace ReCPU
                             break;
                         default:
                             dein.Items.Clear();
-                            dein.Items.Add("Not Supported");
-                            dein.Text = "Not Supported";
-                            dein.Enabled = false;
-                            apply.Enabled = false;
+                            if (usecustomcpu == "false")
+                            {
+                                dein.Items.Add("Not Supported");
+                                dein.Text = "Not Supported";
+                                dein.Enabled = false;
+                                apply.Enabled = false;
+                            }
                             break;
                     }
                     break;
@@ -223,19 +246,25 @@ namespace ReCPU
                             break;
                         default:
                             dein.Items.Clear();
-                            dein.Items.Add("Not Supported");
-                            dein.Text = "Not Supported";
-                            dein.Enabled = false;
-                            apply.Enabled = false;
+                            if (usecustomcpu == "false")
+                            {
+                                dein.Items.Add("Not Supported");
+                                dein.Text = "Not Supported";
+                                dein.Enabled = false;
+                                apply.Enabled = false;
+                            }
                             break;
                     }
                     break;
                 default:
                     dein.Items.Clear();
-                    dein.Items.Add("Not Supported");
-                    dein.Text = "Not Supported";
-                    dein.Enabled = false;
-                    apply.Enabled = false;
+                    if (usecustomcpu == "false")
+                    {
+                        dein.Items.Add("Not Supported");
+                        dein.Text = "Not Supported";
+                        dein.Enabled = false;
+                        apply.Enabled = false;
+                    }
                     break;
             }
         }
@@ -312,7 +341,7 @@ If you still get this error message, make sure you can access to the directory."
         {
             if (isclear.Checked == true)
             {
-                File.Create(ApplicationData + @"\ReCPU\clear").Close();
+                IniFunc.writeString("Section 1", "ClearMode", "true", ApplicationData + @"\ReCPU\Settings.ini");
                 switch (MessageBox.Show(@"ClearMode should only be enabled under Windows 10 environment.
 Do not try it under Windows 7/8/8.1.
 The application will atomaticly reload to take effect.
@@ -346,7 +375,7 @@ Continue?", "Notice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
             }
             else
             {
-                File.Delete(ApplicationData + @"\ReCPU\clear");
+                IniFunc.writeString("Section 1", "ClearMode", "false", ApplicationData + @"\ReCPU\Settings.ini");
                 this.Hide();
                 Form1 form = new Form1();
                 form.ShowDialog();
@@ -358,6 +387,39 @@ Continue?", "Notice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
         {
             About about = new About();
             about.ShowDialog();
+        }
+
+        private void allowCustomCPUModelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (useCustomCPUModelToolStripMenuItem.Checked == true)
+            {
+                IniFunc.writeString("Section 1", "UseCustomCPU", "true", ApplicationData + @"\ReCPU\Settings.ini");
+                inputsellab.Text = "Input CPU model:";
+                dein.DropDownStyle = ComboBoxStyle.DropDown;
+                dein.Items.Clear();
+                dein.Enabled = true;
+                dein.Text = null;
+                manuname.Enabled = false;
+                manuname.Items.Clear();
+                manuname.Text = null;
+                modu1.Enabled = false;
+                modu1.Items.Clear();
+                modu1.Text = null;
+                cpugen.Enabled = false;
+                cpugen.Items.Clear();
+                cpugen.Text = null;
+            }
+            else
+            {
+                IniFunc.writeString("Section 1", "UseCustomCPU", "false", ApplicationData + @"\ReCPU\Settings.ini");
+                inputsellab.Text = "Select CPU model:";
+                dein.DropDownStyle = ComboBoxStyle.DropDownList;
+                manuname.Enabled = true;
+                modu1.Enabled = true;
+                cpugen.Enabled = true;
+                manuname.Items.Add("Intel Core");
+            }
+            usecustomcpu = IniFunc.getString("Section 1", "UseCustomCPU", "false", ApplicationData + @"\ReCPU\Settings.ini");
         }
     }
 

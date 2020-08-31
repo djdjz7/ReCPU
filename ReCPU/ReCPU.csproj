@@ -76,6 +76,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="inicontrol.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="inicontrol.Designer.cs">
+      <DependentUpon>inicontrol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="regestry.cs">

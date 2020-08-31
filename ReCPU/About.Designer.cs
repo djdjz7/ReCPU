@@ -40,9 +40,9 @@
             this.aboutHead.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aboutHead.Location = new System.Drawing.Point(13, 13);
             this.aboutHead.Name = "aboutHead";
-            this.aboutHead.Size = new System.Drawing.Size(210, 47);
+            this.aboutHead.Size = new System.Drawing.Size(209, 47);
             this.aboutHead.TabIndex = 0;
-            this.aboutHead.Text = "ReCPU 0.1n";
+            this.aboutHead.Text = "ReCPU 0.1k";
             // 
             // changelogButton
             // 
