@@ -89,7 +89,7 @@ namespace ReCPU
                 throw new ArgumentException("参数 SavedFilePath 指定无效路径");
             Process.Start(
                    "regedit",
-                   string.Format(" /C {0} {1}",
+                   string.Format("/S /C {0} {1} ",
                    SavedFilePath,
                    regPath));//线程外的
             return 0;
