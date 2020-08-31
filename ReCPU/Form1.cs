@@ -81,8 +81,8 @@ namespace ReCPU
                 File.Create(ApplicationData + @"\ReCPU\Settings.ini").Close();
             InitializeComponent();
             //if (File.Exists(ApplicationData + @"\ReCPU\clear"))
-            enableblur = IniFunc.getString("Section 1", "ClearMode", "false", ApplicationData + @"\ReCPU\Settings.ini");
-            usecustomcpu = IniFunc.getString("Section 1", "UseCustomCPU", "false", ApplicationData + @"\ReCPU\Settings.ini");
+            enableblur = IniFunc.getString("ReCPU", "ClearMode", "false", ApplicationData + @"\ReCPU\Settings.ini");
+            usecustomcpu = IniFunc.getString("ReCPU", "UseCustomCPU", "false", ApplicationData + @"\ReCPU\Settings.ini");
             if(enableblur=="true")
             {
                 EnableBlur();
@@ -341,7 +341,7 @@ If you still get this error message, make sure you can access to the directory."
         {
             if (isclear.Checked == true)
             {
-                IniFunc.writeString("Section 1", "ClearMode", "true", ApplicationData + @"\ReCPU\Settings.ini");
+                IniFunc.writeString("ReCPU", "ClearMode", "true", ApplicationData + @"\ReCPU\Settings.ini");
                 switch (MessageBox.Show(@"ClearMode should only be enabled under Windows 10 environment.
 Do not try it under Windows 7/8/8.1.
 The application will atomaticly reload to take effect.
@@ -375,7 +375,7 @@ Continue?", "Notice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
             }
             else
             {
-                IniFunc.writeString("Section 1", "ClearMode", "false", ApplicationData + @"\ReCPU\Settings.ini");
+                IniFunc.writeString("ReCPU", "ClearMode", "false", ApplicationData + @"\ReCPU\Settings.ini");
                 this.Hide();
                 Form1 form = new Form1();
                 form.ShowDialog();
@@ -393,7 +393,7 @@ Continue?", "Notice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
         {
             if (useCustomCPUModelToolStripMenuItem.Checked == true)
             {
-                IniFunc.writeString("Section 1", "UseCustomCPU", "true", ApplicationData + @"\ReCPU\Settings.ini");
+                IniFunc.writeString("ReCPU", "UseCustomCPU", "true", ApplicationData + @"\ReCPU\Settings.ini");
                 inputsellab.Text = "Input CPU model:";
                 dein.DropDownStyle = ComboBoxStyle.DropDown;
                 dein.Items.Clear();
@@ -411,7 +411,7 @@ Continue?", "Notice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
             }
             else
             {
-                IniFunc.writeString("Section 1", "UseCustomCPU", "false", ApplicationData + @"\ReCPU\Settings.ini");
+                IniFunc.writeString("ReCPU", "UseCustomCPU", "false", ApplicationData + @"\ReCPU\Settings.ini");
                 inputsellab.Text = "Select CPU model:";
                 dein.DropDownStyle = ComboBoxStyle.DropDownList;
                 manuname.Enabled = true;
@@ -420,7 +420,7 @@ Continue?", "Notice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                 manuname.Items.Clear();
                 manuname.Items.Add("Intel Core");
             }
-            usecustomcpu = IniFunc.getString("Section 1", "UseCustomCPU", "false", ApplicationData + @"\ReCPU\Settings.ini");
+            usecustomcpu = IniFunc.getString("ReCPU", "UseCustomCPU", "false", ApplicationData + @"\ReCPU\Settings.ini");
         }
     }
 
