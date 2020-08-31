@@ -78,7 +78,7 @@ namespace ReCPU
             if (!Directory.Exists(ApplicationData + @"\ReCPU"))
                 Directory.CreateDirectory(ApplicationData + @"\ReCPU");
             if (!File.Exists(ApplicationData + @"\ReCPU\Settings.ini"))
-                File.Create(ApplicationData + @"\ReCPU\Settings.ini");
+                File.Create(ApplicationData + @"\ReCPU\Settings.ini").Close();
             InitializeComponent();
             //if (File.Exists(ApplicationData + @"\ReCPU\clear"))
             enableblur = IniFunc.getString("Section 1", "ClearMode", "false", ApplicationData + @"\ReCPU\Settings.ini");
