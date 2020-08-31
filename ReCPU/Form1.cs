@@ -280,7 +280,7 @@ namespace ReCPU
             
             barLabel.Text = "Generating configuration...";
             barProgress.Value = 50;
-            if (dein.SelectedItem == null)
+            if (dein.Text == "")
             {
                 MessageBox.Show("No CPU model selected.\nPlease choose the fake CPU model you want.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 barLabel.Text = "Progress Aborted: No CPU model selected.";
@@ -291,12 +291,12 @@ namespace ReCPU
                 File.WriteAllText(ApplicationData + @"\ReCPU\GENERATED.reg", @"Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0]
-""ProcessorNameString""=""" + dein.SelectedItem + @"""");
+""ProcessorNameString""=""" + dein.Text + @"""");
             if (usecheck.Checked == true)
                 File.WriteAllText(ApplicationData + @"\ReCPU\GENERATED.reg", @"Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0]
-""ProcessorNameString""=""" + dein.SelectedItem + @" @ " + speedinput.Text + @" GHz""");
+""ProcessorNameString""=""" + dein.Text + @" @ " + speedinput.Text + @" GHz""");
             barLabel.Text = "Importing configuration...";
             barProgress.Value = 70;
             global::ReCPU.RegExportImport.ImportReg(ApplicationData + @"\ReCPU\GENERATED.reg", null);
@@ -417,6 +417,7 @@ Continue?", "Notice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                 manuname.Enabled = true;
                 modu1.Enabled = true;
                 cpugen.Enabled = true;
+                manuname.Items.Clear();
                 manuname.Items.Add("Intel Core");
             }
             usecustomcpu = IniFunc.getString("Section 1", "UseCustomCPU", "false", ApplicationData + @"\ReCPU\Settings.ini");
