@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
             this.aboutHead = new System.Windows.Forms.Label();
             this.changelogButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
@@ -40,9 +41,9 @@
             this.aboutHead.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aboutHead.Location = new System.Drawing.Point(13, 13);
             this.aboutHead.Name = "aboutHead";
-            this.aboutHead.Size = new System.Drawing.Size(209, 47);
+            this.aboutHead.Size = new System.Drawing.Size(210, 47);
             this.aboutHead.TabIndex = 0;
-            this.aboutHead.Text = "ReCPU 0.1k";
+            this.aboutHead.Text = "ReCPU 0.1h";
             // 
             // changelogButton
             // 
@@ -86,6 +87,7 @@
             this.Controls.Add(this.changelogButton);
             this.Controls.Add(this.aboutHead);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "About";

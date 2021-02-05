@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 
@@ -75,6 +76,7 @@ namespace ReCPU
 
         public Form1()
         {
+            
             if (!Directory.Exists(ApplicationData + @"\ReCPU"))
                 Directory.CreateDirectory(ApplicationData + @"\ReCPU");
             if (!File.Exists(ApplicationData + @"\ReCPU\Settings.ini"))
@@ -291,12 +293,12 @@ namespace ReCPU
                 File.WriteAllText(ApplicationData + @"\ReCPU\GENERATED.reg", @"Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0]
-""ProcessorNameString""=""" + dein.Text + @"""");
+""ProcessorNameString""=""" + dein.Text + @"""", Encoding.UTF8);
             if (usecheck.Checked == true)
                 File.WriteAllText(ApplicationData + @"\ReCPU\GENERATED.reg", @"Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0]
-""ProcessorNameString""=""" + dein.Text + @" @ " + speedinput.Text + @" GHz""");
+""ProcessorNameString""=""" + dein.Text + @" @ " + speedinput.Text + @" GHz""", Encoding.UTF8);
             barLabel.Text = "Importing configuration...";
             barProgress.Value = 70;
             global::ReCPU.RegExportImport.ImportReg(ApplicationData + @"\ReCPU\GENERATED.reg", null);
